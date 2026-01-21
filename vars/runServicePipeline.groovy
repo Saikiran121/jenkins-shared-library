@@ -1,6 +1,8 @@
 def call() {
+    
+    echo "Running Service Pipeline"
 
-    def config = readYaml file: 'frontend-service-config.yaml'
+    def config = readYaml file: 'frontend-service/frontend-service-config.yaml'
 
     stage('Build') {
         sh config.buildCommand
@@ -12,11 +14,5 @@ def call() {
         }
     }
 
-    stage('Docker Build & Push') {
-        sh """
-          docker build -t ${config.dockerImage}:${BUILD_NUMBER} .
-          docker push ${config.dockerImage}:${BUILD_NUMBER}
-        """
-    }
 }
 
