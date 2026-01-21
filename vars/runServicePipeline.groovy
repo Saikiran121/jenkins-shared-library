@@ -13,12 +13,20 @@ def call() {
 
         stage('Build') {
             echo "Building application"
-            sh config.buildCommand
+	    if (config.buildCommand?.trim()) {
+	    	sh config.buildCommand
+	    } else {
+	 	echo "No build setp defined for this service"
+	    }
         }
 
         stage('Test') {
-            echo "Running tests"
-            sh config.testCommand
+            if (config.testCommand?.trim()) {
+                sh config.testCommand
+            } else {
+                echo "No tests defined"
+            }
+
         }
     }
 }
