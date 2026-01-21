@@ -28,5 +28,23 @@ def call() {
             }
 
         }
+       
+        stage('Sonarqube Analysis') {
+          withSonarQubeEnv('sonarqube') {
+            sh """
+               sonar-scanner \
+               -Dsonar.projectKey=${config.sonarProjectKey} \
+               -Dsonar.projectName=${config.sonarProjectName} \
+               -Dsonar.sources=. \
+               -Dsonar.host.url=https://sonar.saikbiradar.in \
+            """
+          }
+        }
+
+        stage('Quality Gate') {
+            timeout(time: 5, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
     }
 }
