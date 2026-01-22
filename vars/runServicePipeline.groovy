@@ -30,6 +30,9 @@ def call() {
         }
        
         stage('Sonarqube Analysis') {
+          
+          def scannerHome = tool 'sonar-scanner'
+
           withSonarQubeEnv('sonarqube') {
             sh """
                sonar-scanner \
