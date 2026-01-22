@@ -35,7 +35,6 @@ def call() {
 
           withSonarQubeEnv('sonarqube') {
             sh """
-               sonar-scanner \
                ${scannerHome}/bin/sonar-scanner \
                -Dsonar.projectKey=${config.sonarProjectKey} \
                -Dsonar.projectName=${config.sonarProjectName} \
